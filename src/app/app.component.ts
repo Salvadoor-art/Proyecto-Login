@@ -4,6 +4,16 @@ interface GoogleCredentialResponse {
   credential: string;
 }
 
+interface GoogleProfile {
+  name: string;
+  email: string;
+  picture: string;
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
 interface GoogleButtonOptions {
   type: 'standard';
   theme: 'outline';
@@ -47,6 +57,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   private readonly scriptId = 'google-identity-services';
   private destroyed = false;
   signedIn = false;
+  googleProfile: GoogleProfile | null = null;
   errorMessage = '';
 
   async ngAfterViewInit(): Promise<void> {
@@ -85,6 +96,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
 
   signOut(): void {
     this.signedIn = false;
+    this.googleProfile = null;
     window.google?.accounts.id.disableAutoSelect();
     window.google?.accounts.id.cancel();
     window.setTimeout(() => this.renderGoogleButton(), 0);
@@ -96,8 +108,46 @@ export class AppComponent implements AfterViewInit, OnDestroy {
       return;
     }
 
+    try {
+      this.googleProfile = this.readGoogleProfile(response.credential);
+    } catch (error: unknown) {
+      console.error('No se pudo leer el perfil recibido de Google:', error);
+      this.errorMessage = 'No se pudo cargar el perfil de Google. Vuelve a iniciar sesión.';
+      return;
+    }
+
     this.errorMessage = '';
     this.signedIn = true;
+  }
+
+  get profileInitial(): string {
+    return this.googleProfile?.name.charAt(0).toUpperCase() || 'G';
+  }
+
+  private readGoogleProfile(credential: string): GoogleProfile {
+    const payloadSegment = credential.split('.')[1];
+    if (!payloadSegment) {
+      throw new Error('La credencial de Google no contiene un perfil.');
+    }
+
+    const base64Payload = payloadSegment.replace(/-/g, '+').replace(/_/g, '/');
+    const paddedPayload = base64Payload.padEnd(Math.ceil(base64Payload.length / 4) * 4, '=');
+    const binaryPayload = atob(paddedPayload);
+    const payloadBytes = Uint8Array.from(binaryPayload, (character) => character.charCodeAt(0));
+    const claims: unknown = JSON.parse(new TextDecoder().decode(payloadBytes));
+    if (!isRecord(claims)) {
+      throw new Error('El perfil de Google tiene un formato no válido.');
+    }
+
+    const name = claims['name'];
+    const email = claims['email'];
+    const picture = claims['picture'];
+
+    return {
+      name: typeof name === 'string' && name.trim() ? name.trim() : 'Cuenta de Google',
+      email: typeof email === 'string' ? email : 'Correo no disponible',
+      picture: typeof picture === 'string' ? picture : ''
+    };
   }
 
   private loadGoogleIdentityServices(): Promise<void> {

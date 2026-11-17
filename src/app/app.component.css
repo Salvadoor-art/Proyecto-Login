@@ -452,6 +452,12 @@
   font-weight: 700;
 }
 
+img.user-avatar,
+img.provider-mark {
+  display: block;
+  object-fit: cover;
+}
+
 .signout-button,
 .account-signout {
   padding: 9px 13px;

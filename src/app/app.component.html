@@ -38,8 +38,12 @@
         <header class="dashboard-topbar">
           <span class="dashboard-breadcrumb">NUBE <span>/</span> RESUMEN</span>
           <div class="dashboard-user">
-            <span class="user-avatar" aria-hidden="true">G</span>
-            <span class="user-details"><strong>Cuenta Google</strong><small>Sesión conectada</small></span>
+            @if (googleProfile?.picture) {
+              <img class="user-avatar" [src]="googleProfile?.picture ?? ''" [alt]="'Foto de perfil de ' + (googleProfile?.name ?? 'Google')" referrerpolicy="no-referrer">
+            } @else {
+              <span class="user-avatar" aria-hidden="true">{{ profileInitial }}</span>
+            }
+            <span class="user-details"><strong>{{ googleProfile?.name ?? 'Cuenta de Google' }}</strong><small>{{ googleProfile?.email ?? 'Sesión conectada' }}</small></span>
             <button class="signout-button" type="button" (click)="signOut()">Cerrar sesión</button>
           </div>
         </header>
@@ -101,8 +105,12 @@
               <span class="section-label">ACCESO</span>
               <h2 id="account-title">Tu cuenta</h2>
               <div class="account-provider">
-                <span class="provider-mark" aria-hidden="true">G</span>
-                <span><strong>Google</strong><small>Proveedor conectado</small></span>
+                @if (googleProfile?.picture) {
+                  <img class="provider-mark" [src]="googleProfile?.picture ?? ''" [alt]="'Foto de perfil de ' + (googleProfile?.name ?? 'Google')" referrerpolicy="no-referrer">
+                } @else {
+                  <span class="provider-mark" aria-hidden="true">{{ profileInitial }}</span>
+                }
+                <span><strong>{{ googleProfile?.name ?? 'Cuenta de Google' }}</strong><small>{{ googleProfile?.email ?? 'Correo no disponible' }}</small></span>
                 <span class="connected-badge">Activa</span>
               </div>
               <p class="account-note">La demo no almacena tu contraseña ni mantiene una sesión de servidor.</p>
