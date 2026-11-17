@@ -43,7 +43,7 @@ declare global {
   styleUrl: './app.component.css'
 })
 export class AppComponent implements AfterViewInit, OnDestroy {
-  private readonly googleClientId = 'YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com';
+  private readonly googleClientId = '492274807728-3479efa48jdv5fsupn8gg831fkbiofsl.apps.googleusercontent.com';
   private readonly scriptId = 'google-identity-services';
   private destroyed = false;
   signedIn = false;
