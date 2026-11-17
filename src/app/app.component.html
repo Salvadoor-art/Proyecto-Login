@@ -1,0 +1,90 @@
+<main class="page-shell">
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Nube, inicio">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none">
+          <path d="M8.2 19.8a7.1 7.1 0 0 1 1-14 8.6 8.6 0 0 1 16.3 2.8 5.7 5.7 0 0 1-1 11.2H8.2Z" fill="currentColor" />
+          <path d="m12.2 15.7 3 3 5.7-6.1" stroke="#fff" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </span>
+      <span>Nube</span>
+    </a>
+    <p class="topbar-note">¿Primera vez aquí? <a href="mailto:hola@nube.app">Conoce Nube</a></p>
+  </header>
+
+  <section class="login-layout" aria-labelledby="login-title">
+    <div class="welcome-panel">
+      <div class="welcome-content">
+        <span class="eyebrow"><span class="eyebrow-dot"></span> TU ESPACIO, EN UN SOLO LUGAR</span>
+        <h1>Todo lo que necesitas,<br><span>más cerca.</span></h1>
+        <p class="welcome-copy">Entra a tu espacio de trabajo y sigue justo donde lo dejaste.</p>
+
+        <div class="feature-list">
+          <div class="feature">
+            <span class="feature-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 3 5 6v5c0 4.7 3 8.4 7 10 4-1.6 7-5.3 7-10V6l-7-3Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="m9 12 2 2 4-4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <span><strong>Acceso protegido</strong><small>Tu cuenta siempre bajo control</small></span>
+          </div>
+          <div class="feature">
+            <span class="feature-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><rect x="3.5" y="4" width="17" height="16" rx="3" stroke="currentColor" stroke-width="1.7"/><path d="M8 9h8M8 13h5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+            </span>
+            <span><strong>Simple y sin vueltas</strong><small>Inicia sesión con tu cuenta de Google</small></span>
+          </div>
+        </div>
+      </div>
+      <div class="decor decor-one"></div>
+      <div class="decor decor-two"></div>
+      <div class="welcome-footer"><span class="footer-line"></span> Hecho para que puedas enfocarte.</div>
+    </div>
+
+    <div class="form-panel">
+      <div class="login-card">
+        <div class="mobile-brand brand">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none"><path d="M8.2 19.8a7.1 7.1 0 0 1 1-14 8.6 8.6 0 0 1 16.3 2.8 5.7 5.7 0 0 1-1 11.2H8.2Z" fill="currentColor"/><path d="m12.2 15.7 3 3 5.7-6.1" stroke="#fff" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span>Nube</span>
+        </div>
+
+        @if (signedIn) {
+          <div class="success-state" role="status">
+            <span class="success-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><path d="m5 12.5 4.5 4.5L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <span class="section-label">CUENTA CONECTADA</span>
+            <h2 id="login-title">¡Listo, ya estás!</h2>
+            <p class="subtitle">Google completó el inicio de sesión. Puedes continuar a tu espacio.</p>
+            <p class="security-note">Para usar esta credencial en una aplicación real, un servidor debe validarla antes de crear una sesión.</p>
+            <button class="secondary-button" type="button" (click)="signOut()">Cerrar sesión</button>
+          </div>
+        } @else {
+          <div class="section-label">BIENVENIDO DE NUEVO</div>
+          <h2 id="login-title">Inicia sesión</h2>
+          <p class="subtitle">Accede a tu cuenta de forma rápida y segura.</p>
+
+          <div class="google-button-wrap">
+            <div id="google-sign-in-button" aria-label="Continuar con Google"></div>
+          </div>
+
+          @if (errorMessage) {
+            <p class="error-message" role="alert">{{ errorMessage }}</p>
+          }
+
+          <div class="divider"><span>ACCESO SEGURO</span></div>
+          <p class="privacy-note">
+            Al continuar, Google te permitirá elegir una cuenta. Nube no ve ni almacena tu contraseña.
+          </p>
+        }
+      </div>
+      <footer class="form-footer">
+        <span>© 2026 Nube</span>
+        <span class="footer-separator">·</span>
+        <a href="mailto:privacidad@nube.app">Privacidad</a>
+        <span class="footer-separator">·</span>
+        <a href="mailto:ayuda@nube.app">Ayuda</a>
+      </footer>
+    </div>
+  </section>
+</main>

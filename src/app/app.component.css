@@ -1,0 +1,414 @@
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+.page-shell {
+  min-height: 100vh;
+  padding: 0 6.25%;
+}
+
+.topbar {
+  height: 88px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #192443;
+  text-decoration: none;
+  font: 800 21px 'Manrope', sans-serif;
+  letter-spacing: -0.8px;
+}
+
+.brand-mark {
+  width: 35px;
+  height: 35px;
+  display: grid;
+  place-items: center;
+  color: #5263d9;
+}
+
+.brand-mark svg {
+  width: 34px;
+  height: 34px;
+}
+
+.topbar-note {
+  margin: 0;
+  color: #858ca0;
+  font-size: 13px;
+}
+
+.topbar-note a,
+.form-footer a {
+  color: #5363d4;
+  text-decoration: none;
+}
+
+.topbar-note a {
+  margin-left: 4px;
+  font-weight: 700;
+}
+
+.login-layout {
+  min-height: min(700px, calc(100vh - 124px));
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+  border: 1px solid #e8eaf1;
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: 0 24px 80px rgb(34 45 85 / 8%);
+}
+
+.welcome-panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  padding: 70px clamp(36px, 6.3vw, 94px) 36px;
+  color: #fff;
+  background: linear-gradient(145deg, #253465 0%, #3b4b98 53%, #5668cb 100%);
+}
+
+.welcome-content,
+.welcome-footer {
+  position: relative;
+  z-index: 1;
+}
+
+.eyebrow,
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  color: #8d98e3;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.55px;
+}
+
+.eyebrow {
+  color: #c1c9ff;
+}
+
+.eyebrow-dot {
+  width: 7px;
+  height: 7px;
+  margin-right: 9px;
+  border-radius: 50%;
+  background: #a5b2ff;
+  box-shadow: 0 0 0 4px rgb(165 178 255 / 13%);
+}
+
+.welcome-panel h1 {
+  margin: 27px 0 17px;
+  font: 700 clamp(34px, 4vw, 51px)/1.16 'Manrope', sans-serif;
+  letter-spacing: -2px;
+}
+
+.welcome-panel h1 span {
+  color: #b6c0ff;
+}
+
+.welcome-copy {
+  max-width: 350px;
+  margin: 0;
+  color: #d3d9f3;
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.feature-list {
+  display: grid;
+  gap: 24px;
+  margin-top: 65px;
+}
+
+.feature {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.feature-icon {
+  width: 43px;
+  height: 43px;
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid rgb(222 227 255 / 18%);
+  border-radius: 12px;
+  color: #d4dbff;
+  background: rgb(255 255 255 / 8%);
+}
+
+.feature-icon svg {
+  width: 21px;
+  height: 21px;
+}
+
+.feature strong,
+.feature small {
+  display: block;
+}
+
+.feature strong {
+  margin-bottom: 4px;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.feature small {
+  color: #c0c9eb;
+  font-size: 11px;
+}
+
+.welcome-footer {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  color: #c4cbed;
+  font-size: 11px;
+}
+
+.footer-line {
+  width: 25px;
+  height: 1px;
+  background: #a8b4ef;
+}
+
+.decor {
+  position: absolute;
+  border: 1px solid rgb(255 255 255 / 8%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.decor-one {
+  width: 430px;
+  height: 430px;
+  right: -210px;
+  bottom: -180px;
+  box-shadow: 0 0 0 45px rgb(255 255 255 / 2%), 0 0 0 90px rgb(255 255 255 / 2%);
+}
+
+.decor-two {
+  width: 150px;
+  height: 150px;
+  top: -75px;
+  right: 50px;
+}
+
+.form-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 50px 36px 26px;
+}
+
+.login-card {
+  width: min(100%, 370px);
+  margin: auto;
+}
+
+.mobile-brand {
+  display: none;
+}
+
+.section-label {
+  margin-bottom: 14px;
+}
+
+.login-card h2 {
+  margin: 0;
+  color: #1c2541;
+  font: 700 31px 'Manrope', sans-serif;
+  letter-spacing: -1.1px;
+}
+
+.subtitle {
+  margin: 10px 0 30px;
+  color: #858b9c;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.google-button-wrap {
+  min-height: 42px;
+  display: flex;
+  justify-content: center;
+}
+
+#google-sign-in-button {
+  min-height: 40px;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin: 30px 0 17px;
+  color: #a5a9b5;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.1px;
+}
+
+.divider::before,
+.divider::after {
+  height: 1px;
+  flex: 1;
+  content: '';
+  background: #eceef3;
+}
+
+.privacy-note {
+  margin: 0;
+  color: #969bab;
+  font-size: 11px;
+  line-height: 1.75;
+  text-align: center;
+}
+
+.error-message {
+  margin: 12px 0 0;
+  color: #b42335;
+  font-size: 12px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.form-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: #9da2b0;
+  font-size: 10px;
+}
+
+.form-footer a {
+  color: #81879a;
+}
+
+.footer-separator {
+  color: #c3c6d0;
+}
+
+.success-state {
+  padding-top: 8px;
+  text-align: center;
+}
+
+.success-icon {
+  width: 55px;
+  height: 55px;
+  display: grid;
+  margin: 0 auto 23px;
+  place-items: center;
+  border-radius: 17px;
+  color: #4267c7;
+  background: #edf1ff;
+}
+
+.success-icon svg {
+  width: 26px;
+  height: 26px;
+}
+
+.success-state .section-label {
+  margin-bottom: 12px;
+}
+
+.success-state .subtitle {
+  margin-bottom: 20px;
+}
+
+.security-note {
+  padding: 12px 14px;
+  border-radius: 10px;
+  color: #69718a;
+  background: #f6f7fb;
+  font-size: 11px;
+  line-height: 1.65;
+  text-align: left;
+}
+
+.secondary-button {
+  width: 100%;
+  margin-top: 13px;
+  padding: 12px 16px;
+  border: 1px solid #dfe3ef;
+  border-radius: 9px;
+  color: #354169;
+  background: #fff;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.secondary-button:hover {
+  border-color: #9ba8dc;
+  background: #f8f9ff;
+}
+
+@media (max-width: 760px) {
+  .page-shell {
+    padding: 0 20px 24px;
+  }
+
+  .topbar {
+    height: 70px;
+  }
+
+  .topbar-note {
+    font-size: 11px;
+  }
+
+  .login-layout {
+    min-height: min(640px, calc(100vh - 94px));
+    grid-template-columns: 1fr;
+  }
+
+  .welcome-panel {
+    display: none;
+  }
+
+  .form-panel {
+    min-height: 570px;
+    padding: 36px 25px 22px;
+  }
+
+  .mobile-brand {
+    display: inline-flex;
+    margin-bottom: 48px;
+  }
+}
+
+@media (max-width: 420px) {
+  .page-shell {
+    padding: 0 12px 14px;
+  }
+
+  .topbar {
+    height: 64px;
+  }
+
+  .login-layout {
+    border-radius: 16px;
+  }
+
+  .form-panel {
+    min-height: 540px;
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+}
