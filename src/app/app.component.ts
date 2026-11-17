@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy } from '@angular/core';
+import { AfterViewInit, Component, NgZone, OnDestroy } from '@angular/core';
 
 interface GoogleCredentialResponse {
   credential: string;
@@ -60,6 +60,8 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   googleProfile: GoogleProfile | null = null;
   errorMessage = '';
 
+  constructor(private readonly ngZone: NgZone) {}
+
   async ngAfterViewInit(): Promise<void> {
     try {
       await this.loadGoogleIdentityServices();
@@ -79,7 +81,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
 
       google.accounts.id.initialize({
         client_id: this.googleClientId,
-        callback: (response) => this.onGoogleCredential(response),
+        callback: (response) => this.ngZone.run(() => this.onGoogleCredential(response)),
         ux_mode: 'popup'
       });
       this.renderGoogleButton();
