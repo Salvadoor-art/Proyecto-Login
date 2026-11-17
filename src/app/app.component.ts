@@ -1,10 +1,12 @@
-import { AfterViewInit, Component, NgZone, OnDestroy } from '@angular/core';
+import { AfterViewInit, Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 
 interface GoogleCredentialResponse {
   credential: string;
 }
 
-interface GoogleProfile {
+interface AccountProfile {
+  provider: 'google' | 'github';
+  username: string;
   name: string;
   email: string;
   picture: string;
@@ -52,15 +54,24 @@ declare global {
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent implements AfterViewInit, OnDestroy {
+export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
   private readonly googleClientId = '492274807728-3479efa48jdv5fsupn8gg831fkbiofsl.apps.googleusercontent.com';
   private readonly scriptId = 'google-identity-services';
   private destroyed = false;
   signedIn = false;
-  googleProfile: GoogleProfile | null = null;
+  userProfile: AccountProfile | null = null;
   errorMessage = '';
 
   constructor(private readonly ngZone: NgZone) {}
+
+  ngOnInit(): void {
+    if (new URLSearchParams(window.location.search).get('authError') === 'github') {
+      this.errorMessage = 'No se pudo completar el inicio de sesión con GitHub. Inténtalo de nuevo.';
+      window.history.replaceState({}, '', window.location.pathname);
+    }
+
+    void this.restoreGitHubSession();
+  }
 
   async ngAfterViewInit(): Promise<void> {
     try {
@@ -96,9 +107,25 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     window.google?.accounts.id.cancel();
   }
 
-  signOut(): void {
+  async signOut(): Promise<void> {
+    if (this.userProfile?.provider === 'github') {
+      try {
+        const response = await fetch('/api/auth/logout', {
+          method: 'POST',
+          credentials: 'include'
+        });
+        if (!response.ok) {
+          throw new Error(`El servidor respondió con HTTP ${response.status}.`);
+        }
+      } catch (error: unknown) {
+        console.error('No se pudo cerrar la sesión de GitHub:', error);
+        this.errorMessage = 'No se pudo cerrar la sesión con GitHub. Inténtalo de nuevo.';
+        return;
+      }
+    }
+
     this.signedIn = false;
-    this.googleProfile = null;
+    this.userProfile = null;
     window.google?.accounts.id.disableAutoSelect();
     window.google?.accounts.id.cancel();
     window.setTimeout(() => this.renderGoogleButton(), 0);
@@ -111,7 +138,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     }
 
     try {
-      this.googleProfile = this.readGoogleProfile(response.credential);
+      this.userProfile = this.readGoogleProfile(response.credential);
     } catch (error: unknown) {
       console.error('No se pudo leer el perfil recibido de Google:', error);
       this.errorMessage = 'No se pudo cargar el perfil de Google. Vuelve a iniciar sesión.';
@@ -122,11 +149,72 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     this.signedIn = true;
   }
 
-  get profileInitial(): string {
-    return this.googleProfile?.name.charAt(0).toUpperCase() || 'G';
+  private async restoreGitHubSession(): Promise<void> {
+    try {
+      const response = await fetch('/api/auth/session', { credentials: 'include' });
+      if (!response.ok) {
+        throw new Error(`El servidor respondió con HTTP ${response.status}.`);
+      }
+
+      const session: unknown = await response.json();
+      if (!isRecord(session) || session['authenticated'] !== true) {
+        return;
+      }
+
+      const profile = session['profile'];
+      const name = isRecord(profile) ? profile['name'] : undefined;
+      const email = isRecord(profile) ? profile['email'] : undefined;
+      const picture = isRecord(profile) ? profile['picture'] : undefined;
+      const username = isRecord(profile) ? profile['username'] : undefined;
+      if (
+        !isRecord(profile) ||
+        typeof name !== 'string' ||
+        typeof email !== 'string' ||
+        typeof picture !== 'string' ||
+        typeof username !== 'string' ||
+        profile['provider'] !== 'github'
+      ) {
+        throw new Error('El servidor devolvió un perfil de GitHub no válido.');
+      }
+
+      this.ngZone.run(() => {
+        this.userProfile = {
+          provider: 'github',
+          name,
+          email,
+          picture,
+          username
+        };
+        this.signedIn = true;
+      });
+    } catch (error: unknown) {
+      console.error('No se pudo restaurar la sesión de GitHub:', error);
+      this.errorMessage = 'No se pudo comprobar la sesión. Reinicia la aplicación e inténtalo de nuevo.';
+    }
   }
 
-  private readGoogleProfile(credential: string): GoogleProfile {
+  startGitHubLogin(): void {
+    window.location.assign('/auth/github');
+  }
+
+  get profileInitial(): string {
+    return this.userProfile?.name.charAt(0).toUpperCase() || 'G';
+  }
+
+  get profileDetail(): string {
+    if (!this.userProfile) {
+      return '';
+    }
+
+    return this.userProfile.email ||
+      (this.userProfile.provider === 'github' ? `@${this.userProfile.username}` : 'Sesión conectada');
+  }
+
+  get providerLabel(): string {
+    return this.userProfile?.provider === 'github' ? 'GitHub' : 'Google';
+  }
+
+  private readGoogleProfile(credential: string): AccountProfile {
     const payloadSegment = credential.split('.')[1];
     if (!payloadSegment) {
       throw new Error('La credencial de Google no contiene un perfil.');
@@ -146,6 +234,8 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     const picture = claims['picture'];
 
     return {
+      provider: 'google',
+      username: '',
       name: typeof name === 'string' && name.trim() ? name.trim() : 'Cuenta de Google',
       email: typeof email === 'string' ? email : 'Correo no disponible',
       picture: typeof picture === 'string' ? picture : ''

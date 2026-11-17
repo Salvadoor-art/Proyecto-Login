@@ -247,6 +247,39 @@
   justify-content: center;
 }
 
+.github-button {
+  width: 100%;
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 1px solid #dfe3ef;
+  border-radius: 8px;
+  color: #24292f;
+  background: #fff;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.github-button svg {
+  width: 17px;
+  height: 17px;
+}
+
+.github-button:hover {
+  border-color: #b6bfdc;
+  background: #f8f9ff;
+}
+
+.github-button:focus-visible,
+.signout-button:focus-visible,
+.account-signout:focus-visible {
+  outline: 2px solid #6979d6;
+  outline-offset: 2px;
+}
+
 #google-sign-in-button {
   min-height: 40px;
 }
@@ -255,7 +288,7 @@
   display: flex;
   align-items: center;
   gap: 15px;
-  margin: 30px 0 17px;
+  margin: 22px 0 15px;
   color: #a5a9b5;
   font-size: 9px;
   font-weight: 700;
