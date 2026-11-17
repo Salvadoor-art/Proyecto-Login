@@ -1,4 +1,120 @@
 <main class="page-shell">
+  @if (signedIn) {
+    <section class="dashboard-shell" aria-label="Panel de Nube">
+      <aside class="dashboard-sidebar">
+        <a class="brand" href="/" aria-label="Nube, inicio">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none">
+              <path d="M8.2 19.8a7.1 7.1 0 0 1 1-14 8.6 8.6 0 0 1 16.3 2.8 5.7 5.7 0 0 1-1 11.2H8.2Z" fill="currentColor" />
+              <path d="m12.2 15.7 3 3 5.7-6.1" stroke="#fff" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </span>
+          <span>Nube</span>
+        </a>
+
+        <span class="sidebar-caption">ESPACIO DE TRABAJO</span>
+        <nav class="dashboard-nav" aria-label="Navegación del panel">
+          <a class="dashboard-nav-link active" href="#overview">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.7"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.7"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.7"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.7"/></svg>
+            Resumen
+          </a>
+          <a class="dashboard-nav-link" href="#activity">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 19.5h16M6.5 16V10m5.5 6V5m5.5 11v-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Actividad
+          </a>
+          <a class="dashboard-nav-link" href="#account">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.7"/><path d="M5 20c.7-3.1 3.2-5 7-5s6.3 1.9 7 5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+            Mi cuenta
+          </a>
+        </nav>
+
+        <div class="sidebar-status">
+          <span class="status-dot"></span>
+          <span><strong>Sesión activa</strong><small>Conectado con Google</small></span>
+        </div>
+      </aside>
+
+      <div class="dashboard-main">
+        <header class="dashboard-topbar">
+          <span class="dashboard-breadcrumb">NUBE <span>/</span> RESUMEN</span>
+          <div class="dashboard-user">
+            <span class="user-avatar" aria-hidden="true">G</span>
+            <span class="user-details"><strong>Cuenta Google</strong><small>Sesión conectada</small></span>
+            <button class="signout-button" type="button" (click)="signOut()">Cerrar sesión</button>
+          </div>
+        </header>
+
+        <div class="dashboard-content">
+          <section class="dashboard-intro" id="overview" aria-labelledby="dashboard-title">
+            <span class="section-label">TU ESPACIO PERSONAL</span>
+            <h1 id="dashboard-title">¡Bienvenido a Nube!</h1>
+            <p>Has iniciado sesión. Aquí tienes un resumen de tu espacio.</p>
+            <span class="intro-decoration" aria-hidden="true"></span>
+          </section>
+
+          <section class="dashboard-stats" aria-label="Resumen de la cuenta">
+            <article class="stat-card">
+              <span class="stat-icon purple" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="4" stroke="currentColor" stroke-width="1.8"/><path d="M8 9h8M8 13h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+              </span>
+              <span class="stat-label">Mi espacio</span>
+              <strong>Personal</strong>
+              <small>Tu área de trabajo</small>
+            </article>
+            <article class="stat-card">
+              <span class="stat-icon blue" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.8"/><path d="m9 12 2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <span class="stat-label">Inicio de sesión</span>
+              <strong>Google</strong>
+              <small>Cuenta conectada</small>
+            </article>
+            <article class="stat-card">
+              <span class="stat-icon green" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M12 3 5 6v5c0 4.7 3 8.4 7 10 4-1.6 7-5.3 7-10V6l-7-3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m9 12 2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <span class="stat-label">Estado</span>
+              <strong>Conectado</strong>
+              <small>Sesión iniciada correctamente</small>
+            </article>
+          </section>
+
+          <div class="dashboard-lower-grid">
+            <section class="dashboard-panel" id="activity" aria-labelledby="activity-title">
+              <div class="panel-heading">
+                <div>
+                  <span class="section-label">TU ESPACIO</span>
+                  <h2 id="activity-title">Actividad reciente</h2>
+                </div>
+                <span class="panel-menu" aria-hidden="true">•••</span>
+              </div>
+              <div class="empty-state">
+                <span class="empty-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none"><path d="M5 5.5h14A1.5 1.5 0 0 1 20.5 7v12A1.5 1.5 0 0 1 19 20.5H5A1.5 1.5 0 0 1 3.5 19V7A1.5 1.5 0 0 1 5 5.5Z" stroke="currentColor" stroke-width="1.7"/><path d="M8 9h8M8 13h5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+                </span>
+                <strong>Todo está listo</strong>
+                <p>Tu actividad aparecerá aquí cuando empieces a usar tu espacio.</p>
+              </div>
+            </section>
+
+            <section class="dashboard-panel account-panel" id="account" aria-labelledby="account-title">
+              <span class="section-label">ACCESO</span>
+              <h2 id="account-title">Tu cuenta</h2>
+              <div class="account-provider">
+                <span class="provider-mark" aria-hidden="true">G</span>
+                <span><strong>Google</strong><small>Proveedor conectado</small></span>
+                <span class="connected-badge">Activa</span>
+              </div>
+              <p class="account-note">La demo no almacena tu contraseña ni mantiene una sesión de servidor.</p>
+              <button class="account-signout" type="button" (click)="signOut()">Cerrar sesión</button>
+            </section>
+          </div>
+
+          <footer class="dashboard-footer">© 2026 Nube <span>·</span> Tu espacio, en un solo lugar.</footer>
+        </div>
+      </div>
+    </section>
+  } @else {
   <header class="topbar">
     <a class="brand" href="/" aria-label="Nube, inicio">
       <span class="brand-mark" aria-hidden="true">
@@ -48,35 +164,22 @@
           <span>Nube</span>
         </div>
 
-        @if (signedIn) {
-          <div class="success-state" role="status">
-            <span class="success-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none"><path d="m5 12.5 4.5 4.5L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-            <span class="section-label">CUENTA CONECTADA</span>
-            <h2 id="login-title">¡Listo, ya estás!</h2>
-            <p class="subtitle">Google completó el inicio de sesión. Puedes continuar a tu espacio.</p>
-            <p class="security-note">Para usar esta credencial en una aplicación real, un servidor debe validarla antes de crear una sesión.</p>
-            <button class="secondary-button" type="button" (click)="signOut()">Cerrar sesión</button>
-          </div>
-        } @else {
-          <div class="section-label">BIENVENIDO DE NUEVO</div>
-          <h2 id="login-title">Inicia sesión</h2>
-          <p class="subtitle">Accede a tu cuenta de forma rápida y segura.</p>
+        <div class="section-label">BIENVENIDO DE NUEVO</div>
+        <h2 id="login-title">Inicia sesión</h2>
+        <p class="subtitle">Accede a tu cuenta de forma rápida y segura.</p>
 
-          <div class="google-button-wrap">
-            <div id="google-sign-in-button" aria-label="Continuar con Google"></div>
-          </div>
+        <div class="google-button-wrap">
+          <div id="google-sign-in-button" aria-label="Continuar con Google"></div>
+        </div>
 
-          @if (errorMessage) {
-            <p class="error-message" role="alert">{{ errorMessage }}</p>
-          }
-
-          <div class="divider"><span>ACCESO SEGURO</span></div>
-          <p class="privacy-note">
-            Al continuar, Google te permitirá elegir una cuenta. Nube no ve ni almacena tu contraseña.
-          </p>
+        @if (errorMessage) {
+          <p class="error-message" role="alert">{{ errorMessage }}</p>
         }
+
+        <div class="divider"><span>ACCESO SEGURO</span></div>
+        <p class="privacy-note">
+          Al continuar, Google te permitirá elegir una cuenta. Nube no ve ni almacena tu contraseña.
+        </p>
       </div>
       <footer class="form-footer">
         <span>© 2026 Nube</span>
@@ -87,4 +190,5 @@
       </footer>
     </div>
   </section>
+  }
 </main>
